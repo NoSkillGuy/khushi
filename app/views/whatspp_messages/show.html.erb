@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @whatspp_message.data %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @whatspp_message.user_id %>
+</p>
+
+<p>
+  <strong>Spam:</strong>
+  <%= @whatspp_message.spam %>
+</p>
+
+<%= link_to 'Edit', edit_whatspp_message_path(@whatspp_message) %> |
+<%= link_to 'Back', whatspp_messages_path %>

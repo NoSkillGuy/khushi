@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Whatspp Messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>User</th>
+      <th>Spam</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @whatspp_messages.each do |whatspp_message| %>
+      <tr>
+        <td><%= whatspp_message.data %></td>
+        <td><%= whatspp_message.user_id %></td>
+        <td><%= whatspp_message.spam %></td>
+        <td><%= link_to 'Show', whatspp_message %></td>
+        <td><%= link_to 'Edit', edit_whatspp_message_path(whatspp_message) %></td>
+        <td><%= link_to 'Destroy', whatspp_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Whatspp Message', new_whatspp_message_path %>

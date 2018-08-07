@@ -10,16 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_07_104042) do
+ActiveRecord::Schema.define(version: 2018_08_07_105547) do
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name"
     t.string "second_name"
     t.string "email"
-    t.integer "role", limit: 1
+    t.integer "role", limit: 1, default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "phone_number"
+  end
+
+  create_table "whatspp_messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "data"
+    t.integer "user_id"
+    t.boolean "spam", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

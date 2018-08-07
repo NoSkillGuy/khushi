@@ -24,12 +24,13 @@ data_templates = [
 	'alert',
 	'HB',
 	'iron',
-	"MAUN #{Faker::Number.between(1, 20)}"
+	"MAUC #{Faker::Number.between(1, 20)}"
 ]
 
 20.times do |t|
 	tm = Time.now - t*60
 	10.times do |i|
-		WhatsppMessage.create(data: "#{Faker::HarryPotter.quote} #{data_templates.sample}", created_at: tm, updated_at: tm, user_id: Faker::Number.between(2, 21))
+		wm = WhatsppMessage.create(data: "#{Faker::HarryPotter.quote} #{data_templates.sample} #{data_templates.sample} #{data_templates.sample}", created_at: tm, updated_at: tm, user_id: Faker::Number.between(2, 21))
+		wm.set_events
 	end
 end

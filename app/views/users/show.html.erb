@@ -1,30 +1,52 @@
-<p id="notice"><%= notice %></p>
+<!-- <p id="notice"><%= notice %></p>
 
 <p>
   <strong>First name:</strong>
-  <%= @user.first_name %>
+  <%#= @user.first_name %>
 </p>
 
 <p>
   <strong>Second name:</strong>
-  <%= @user.second_name %>
+  <%#= @user.second_name %>
 </p>
 
 <p>
   <strong>Email:</strong>
-  <%= @user.email %>
+  <%#= @user.email %>
 </p>
 
 <p>
   <strong>Role:</strong>
-  <%= @user.role %>
+  <%#= @user.role %>
 </p>
 
 <p>
   <strong>Phone Number:</strong>
-  <%= @user.phone_number %>
+  <%#= @user.phone_number %>
 </p>
 
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%#= link_to 'Edit', edit_user_path(@user) %> |
+<%#= link_to 'Back', users_path %>
+ -->
+
+<%#= line_chart @events.map { |event|
+    { name: event.category, data: event.group_by_minute(:created_at, time_zone: "New Delhi").count }
+} %>
+
+<%#= line_chart User.group_by_minute(:created_at).count %>
+
+<%# event_data = Event.group(:category).group_by_minute(:created_at).count %>
+<%#= event_data %>
+<div id="users_show_page">
+  <%
+  whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+  event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+  %>
+  <%= line_chart event_data, id: 'event_line_chart' %>
+
+  <p id="user_events_path" data-user-events-path="<%= user_events_path(user_id: @user.id) %>"></p>
+
+  <%#= line_chart({20.day.ago => 5, 1368174456 => 4, "2013-05-07 00:00:00 UTC" => 7}) %>
+  <div id="chart-1" style="height: 300px"></div>
+</div>

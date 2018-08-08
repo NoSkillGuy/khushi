@@ -1,11 +1,16 @@
 class WhatsppMessagesController < ApplicationController
+  before_action :user_logged_in, only: [:index]
   before_action :set_whatspp_message, only: [:show]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   # GET /whatspp_messages
   # GET /whatspp_messages.json
   def index
-    @whatspp_messages = WhatsppMessage.all
+    @whatspp_messages = @user.whatspp_messages
+    respond_to do |format|
+      format.html
+      format.json { render json: WhatsppMessagesDatatable.new(view_context,@user) }
+    end
   end
 
   # GET /whatspp_messages/1
@@ -21,6 +26,7 @@ class WhatsppMessagesController < ApplicationController
       @whatspp_message = WhatsppMessage.new(user_id: @user.id, data: params['Body'])
       respond_to do |format|
         if @whatspp_message.save
+          @whatspp_message.set_events
           format.json { render :show, status: :created, location: @whatspp_message }
         else
           format.json { render json: @whatspp_message.errors, status: :unprocessable_entity }

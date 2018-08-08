@@ -42,6 +42,15 @@ gem 'mysql2'
 # Whatsapp API 
 gem 'twilio-ruby', '~> 4.11', '>= 4.11.1'
 
+# Use JQuery ( Bootstrap dependency )
+gem 'jquery-rails'
+
+# Use Bootstrap 
+gem 'bootstrap', '~> 4.1.3'
+
+# For Pagination
+gem 'will_paginate'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

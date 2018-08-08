@@ -1,2 +1,5 @@
-json.extract! whatspp_message, :id, :data, :user_id, :spam, :created_at, :updated_at
-json.url whatspp_message_url(whatspp_message, format: :json)
+json.extract! whatspp_message, :created_at
+json.first_name whatspp_message.user.first_name
+json.phone_number whatspp_message.user.phone_number
+json.event_category whatspp_message.events.pluck(:category).join(',')
+json.message whatspp_message.data

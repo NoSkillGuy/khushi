@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :whatspp_messages, only: [:create]
+  resources :whatspp_messages, only: [:create, :show]
   resources :users, only: [:show, :new, :create, :update, :edit] do 
   	resources :whatspp_messages, only: [:index]
   end

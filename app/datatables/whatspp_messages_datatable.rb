@@ -9,7 +9,7 @@ class WhatsppMessagesDatatable
   def as_json(options = {})
     {
       sEcho: params[:sEcho].to_i,
-      iTotalRecords: WhatsppMessage.where(user_id: @user.id).count,
+      iTotalRecords: whatspp_messages.count,
       iTotalDisplayRecords: whatspp_messages.total_entries,
       aaData: data
     }
@@ -40,9 +40,13 @@ private
       whatspp_messages = WhatsppMessage.where(user_id: @user.id).order("#{sort_column} #{sort_direction}")
     end
     whatspp_messages = whatspp_messages.page(page).per_page(per_page)
-    if params[:sSearch].present?
-      whatspp_messages = whatspp_messages.includes(:events).where("data like :search", search: "%#{params[:sSearch]}%")
-    end
+    whatspp_messages = whatspp_messages.includes(:user, :events)
+    whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch]}%") if params[:sSearch].present?
+    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_0]}%") if params[:sSearch_0].present?
+    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
+    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
+    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_3]}%") if params[:sSearch_3].present?
+    whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_4]}%") if params[:sSearch_4].present?
     whatspp_messages
   end
 

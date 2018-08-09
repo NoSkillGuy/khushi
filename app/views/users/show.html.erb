@@ -38,15 +38,12 @@
 
 <%# event_data = Event.group(:category).group_by_minute(:created_at).count %>
 <%#= event_data %>
+<strong>Events Activity Time Line Graph</strong>
 <div id="users_show_page">
   <%
   whatspp_message_ids = @user.whatspp_messages.pluck(:id)
-  event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+  event_data_by_category_and_minute = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
   %>
-  <%= line_chart event_data, id: 'event_line_chart' %>
-
-  <p id="user_events_path" data-user-events-path="<%= user_events_path(user_id: @user.id) %>"></p>
-
-  <%#= line_chart({20.day.ago => 5, 1368174456 => 4, "2013-05-07 00:00:00 UTC" => 7}) %>
-  <div id="chart-1" style="height: 300px"></div>
+  <%= line_chart event_data_by_category_and_minute, id: 'event_line_chart' %>
+  <p id="user_events_path" data-user-events-path=<%= events_data_user_path(user_id: @user.id) %> data-user-events-count=<%= event_data_by_category_and_minute.count %> data-user-events-count-path=<%= events_count_user_path(user_id: @user.id) %>></p>
 </div>

@@ -56,6 +56,7 @@ gem 'groupdate', '~> 2.5', '>= 2.5.2'
 
 # For charts
 gem 'chartkick', '~> 1.4', '>= 1.4.1'
+gem 'highcharts-rails'
 
 # For Authentication
 gem 'devise', '~> 4.2'

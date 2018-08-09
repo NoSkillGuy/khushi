@@ -1,11 +1,35 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:new, :create]
-  before_action :user_logged_in, only: [:show, :edit, :update]
+  before_action :authenticate_user!
+  before_action :user_logged_in
 
   # layout :resolve_layout
   # GET /users/1
   # GET /users/1.json
   def show
+  end
+
+  def events_count
+    if @user.admin?
+      whatspp_message_ids = WhatsppMessages.all.pluck(:id)
+    else
+      whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+    end
+    event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count.count
+    respond_to do |format|
+      format.json { render json: event_data }
+    end    
+  end
+
+  def events_data
+    if @user.admin?
+      whatspp_message_ids = WhatsppMessages.all.pluck(:id)
+    else
+      whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+    end
+    event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+    respond_to do |format|
+      format.json { render json: JSON.parse(event_data.chart_json) }
+    end    
   end
 
   # GET /users/new

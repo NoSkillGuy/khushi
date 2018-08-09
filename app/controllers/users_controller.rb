@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   def events_count
     if @user.admin?
-      whatspp_message_ids = WhatsppMessages.all.pluck(:id)
+      whatspp_message_ids = WhatsppMessage.all.pluck(:id)
     else
       whatspp_message_ids = @user.whatspp_messages.pluck(:id)
     end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
 
   def events_data
     if @user.admin?
-      whatspp_message_ids = WhatsppMessages.all.pluck(:id)
+      whatspp_message_ids = WhatsppMessage.all.pluck(:id)
     else
       whatspp_message_ids = @user.whatspp_messages.pluck(:id)
     end

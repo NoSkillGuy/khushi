@@ -1,43 +1,345 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<!-- <h2>Edit <%#= resource_name.to_s.humanize %></h2>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
+<%#= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+  <%#= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%#= f.label :email %><br />
+    <%#= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-  <% end %>
+  <%# if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%#= resource.unconfirmed_email %></div>
+  <%# end %>
 
   <div class="field">
-    <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-    <% if @minimum_password_length %>
+    <%#= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+    <%#= f.password_field :password, autocomplete: "off" %>
+    <%# if @minimum_password_length %>
       <br />
-      <em><%= @minimum_password_length %> characters minimum</em>
-    <% end %>
+      <em><%#= @minimum_password_length %> characters minimum</em>
+    <%# end %>
   </div>
 
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%#= f.label :password_confirmation %><br />
+    <%#= f.password_field :password_confirmation, autocomplete: "off" %>
   </div>
 
   <div class="field">
-    <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %>
+    <%#= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+    <%#= f.password_field :current_password, autocomplete: "off" %>
   </div>
 
   <div class="actions">
-    <%= f.submit "Update" %>
+    <%#= f.submit "Update" %>
   </div>
-<% end %>
+<%# end %>
 
 <h3>Cancel my account</h3>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+<p>Unhappy? <%#= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
 
-<%= link_to "Back", :back %>
+<%#= link_to "Back", :back %>
+ -->
+
+
+<!-- <p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%#= @user.name %>
+</p>
+
+<p>
+  <strong>Aadhar:</strong>
+  <%#= @user.aadhar %>
+</p>
+
+<table>
+  <tr>
+    <td>My Medicines</td>
+    <td>When to take?</td>
+  </tr>
+  <%# @user.medicines.each do |med| %>
+    <tr>
+      <td><%#=med.name %></td>
+      <%# um = UserMedicine.where(user_id: @user.id, medicine_id: med.id).first %>
+      <%# umt = um.user_medicine_timers %>
+      <td>
+        <%#= umt.pluck(:medicine_time).join(',') if umt.present? %>
+        <%#= link_to 'Add Timer', new_user_user_medicine_user_medicine_timer_path(user_id: um.user.id,user_medicine_id: um.id) %>    
+      </td>
+    </tr>
+  <%# end %>   
+</table>
+
+<%#= link_to 'Add Medicines', new_user_user_medicine_path(user_id: @user.id) %><br>
+<%#= link_to 'Edit', edit_user_path(@user) %> |
+<%#= link_to 'Back', users_path %>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    <i class="fas fa-table"></i>
+    Data Table Example</div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Age</th>
+            <th>Start date</th>
+            <th>Salary</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>Tiger Nixon</td>
+            <td>System Architect</td>
+            <td>Edinburgh</td>
+            <td>61</td>
+            <td>2011/04/25</td>
+            <td>$320,800</td>
+          </tr>
+          <tr>
+            <td>Donna Snider</td>
+            <td>Customer Support</td>
+            <td>New York</td>
+            <td>27</td>
+            <td>2011/01/25</td>
+            <td>$112,000</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+</div> -->
+
+<div class="container">
+    <div class="row my-2">
+        <div class="col-lg-8 order-lg-2">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a href="" data-target="#profile" data-toggle="tab" class="nav-link active">Profile</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a href="" data-target="#messages" data-toggle="tab" class="nav-link">Messages</a>
+                </li> -->
+                <li class="nav-item">
+                    <a href="" data-target="#edit" data-toggle="tab" class="nav-link">Edit</a>
+                </li>
+            </ul>
+            <div class="tab-content py-4">
+                <div class="tab-pane active" id="profile">
+                    <h5 class="mb-3">User Profile</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>About</h6>
+                            <p>
+                                Web Designer, UI/UX Engineer
+                            </p>
+                            <h6>Hobbies</h6>
+                            <p>
+                                Indie music, skiing and hiking. I love the great outdoors.
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Recent badges</h6>
+                            <a href="#" class="badge badge-dark badge-pill">html5</a>
+                            <a href="#" class="badge badge-dark badge-pill">react</a>
+                            <a href="#" class="badge badge-dark badge-pill">codeply</a>
+                            <a href="#" class="badge badge-dark badge-pill">angularjs</a>
+                            <a href="#" class="badge badge-dark badge-pill">css3</a>
+                            <a href="#" class="badge badge-dark badge-pill">jquery</a>
+                            <a href="#" class="badge badge-dark badge-pill">bootstrap</a>
+                            <a href="#" class="badge badge-dark badge-pill">responsive-design</a>
+                            <hr>
+                            <span class="badge badge-primary"><i class="fa fa-user"></i> 900 Followers</span>
+                            <span class="badge badge-success"><i class="fa fa-cog"></i> 43 Forks</span>
+                            <span class="badge badge-danger"><i class="fa fa-eye"></i> 245 Views</span>
+                        </div>
+                        <div class="col-md-12">
+                            <h5 class="mt-2"><span class="fa fa-clock-o ion-clock float-right"></span> Recent Activity</h5>
+                            <table class="table table-sm table-hover table-striped">
+                                <tbody>                                    
+                                    <tr>
+                                        <td>
+                                            <strong>Abby</strong> joined ACME Project Team in <strong>`Collaboration`</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Gary</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Kensington</strong> deleted MyBoard3 in <strong>`Discussions`</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>John</strong> deleted My Board1 in <strong>`Discussions`</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Skell</strong> deleted his post Look at Why this is.. in <strong>`Discussions`</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--/row-->
+                </div>
+                <!-- <div class="tab-pane" id="messages">
+                    <div class="alert alert-info alert-dismissable">
+                        <a class="panel-close close" data-dismiss="alert">×</a> This is an <strong>.alert</strong>. Use this to show important messages to the user.
+                    </div>
+                    <table class="table table-hover table-striped">
+                        <tbody>                                    
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">3 hrs ago</span> Here is your a link to the latest summary report from the..
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">Yesterday</span> There has been a request on your account since that was..
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/10</span> Porttitor vitae ultrices quis, dapibus id dolor. Morbi venenatis lacinia rhoncus. 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/4</span> Vestibulum tincidunt ullamcorper eros eget luctus. 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                   <span class="float-right font-weight-bold">9/4</span> Maxamillion ais the fix for tibulum tincidunt ullamcorper eros. 
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div> -->
+                <div class="tab-pane" id="edit">
+                    <%= form_with( model: @user , local: true) do |form| %>
+                      <% if @user.errors.any? %>
+                        <div id="error_explanation">
+                          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+                          <ul>
+                          <% @user.errors.full_messages.each do |message| %>
+                            <li><%= message %></li>
+                          <% end %>
+                          </ul>
+                        </div>
+                      <% end %>                    
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                          <div class="col-lg-9">
+                              <%= form.text_field :first_name, class: 'form-control'%>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                          <div class="col-lg-9">
+                              <%= form.text_field :last_name, class: 'form-control' %>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                          <div class="col-lg-9">
+                              <input class="form-control" value="<%= @user.email %>" name="email" id="user_last_name" type="text" readonly>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                          <div class="col-lg-9">
+                              <%#= form.text_field :user_name, class: 'form-control' %>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">YOB</label>
+                          <div class="col-lg-9">
+                              <%#= form.select :yob, options_for_select([ [2018, 2018],[2017,2017] ], 2018), {}, { include_blank: true, class: 'form-control'} %>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Pin Code</label>
+                          <div class="col-lg-9">
+                              <%#= form.text_field :pin_code, class: 'form-control' %>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Gender</label>
+                          <div class="col-lg-9">
+                              <%#= form.select :gender,options_for_select(User.genders.to_a), {}, {class: 'form-control'} %>
+                          </div>
+                      </div>                      
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Password</label>
+                          <div class="col-lg-9">
+                              <input class="form-control" type="password" value="11111122333">
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
+                          <div class="col-lg-9">
+                              <input class="form-control" type="password" value="11111122333">
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-lg-3 col-form-label form-control-label"></label>
+                          <div class="col-lg-9">
+                              <!-- <input type="reset" class="btn btn-secondary" value="Cancel"> -->
+                              <%= form.submit "Cancel", type: 'reset', class: 'btn btn-secondary' %>
+                              <!-- <input type="button" class="btn btn-primary" value="Save Changes"> -->
+                              <%= form.submit "Save Changes", type: 'submit', class: 'btn btn-primary' %>
+                          </div>
+                      </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 order-lg-1 text-center">
+            <%# user_image = @user.image %>
+            <%# if user_image.attached? %>
+            <% if 1 == 2 %>
+              <%#= image_tag user_image.variant(resize: "150x150"), class: "mx-auto img-fluid img-circle d-block", alt:"avatar" %>
+            <% else %>
+              <img src="//placehold.it/150" class="mx-auto img-fluid img-circle d-block" alt="avatar">
+            <% end %>
+            <h6 class="mt-2">Upload a different photo</h6>
+            <label class="custom-file">
+                <!-- <input type="file" id="file" class="custom-file-input"> -->
+                
+                <%#= form_with(model: @user, local: true, html: {id: 'user_image_form'}) do |form| %>
+                  <%#= form.file_field :image, class: 'custom-file-input'%>
+                  <%#= form.submit "Update", id: 'hidden_user_image_submit_button'%>
+                <%# end %>
+                <span class="custom-file-control">Choose file</span>
+            </label>
+        </div>
+    </div>
+</div>

@@ -34,20 +34,25 @@ private
   end
 
   def fetch_whatspp_messages
-    if sort_column == 'user' || sort_column == 'phone_number' || sort_column == 'event_category'
-      whatspp_messages = WhatsppMessage.where(user_id: @user.id)
+    if @user.admin?
+      wms = WhatsppMessage.all
     else
-      whatspp_messages = WhatsppMessage.where(user_id: @user.id).order("#{sort_column} #{sort_direction}")
+      wms = WhatsppMessage.where(user_id: @user.id)
     end
-    whatspp_messages = whatspp_messages.page(page).per_page(per_page)
-    whatspp_messages = whatspp_messages.includes(:user, :events)
-    whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch]}%") if params[:sSearch].present?
-    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_0]}%") if params[:sSearch_0].present?
-    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
-    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
-    # whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_3]}%") if params[:sSearch_3].present?
-    whatspp_messages = whatspp_messages.where("data like :search", search: "%#{params[:sSearch_4]}%") if params[:sSearch_4].present?
-    whatspp_messages
+    if sort_column == 'user' || sort_column == 'phone_number' || sort_column == 'event_category'
+      wms = wms
+    else
+      wms = wms.order("#{sort_column} #{sort_direction}")
+    end
+    wms = wms.page(page).per_page(per_page)
+    wms = wms.includes(:user, :events)
+    wms = wms.where("data like :search", search: "%#{params[:sSearch]}%") if params[:sSearch].present?
+    # wms = wms.where("data like :search", search: "%#{params[:sSearch_0]}%") if params[:sSearch_0].present?
+    # wms = wms.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
+    # wms = wms.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
+    # wms = wms.where("data like :search", search: "%#{params[:sSearch_3]}%") if params[:sSearch_3].present?
+    wms = wms.where("data like :search", search: "%#{params[:sSearch_4]}%") if params[:sSearch_4].present?
+    wms
   end
 
   def page

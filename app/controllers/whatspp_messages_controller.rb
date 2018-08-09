@@ -6,18 +6,12 @@ class WhatsppMessagesController < ApplicationController
   # GET /whatspp_messages
   # GET /whatspp_messages.json
   def index
-    @whatspp_messages = @user.whatspp_messages
     respond_to do |format|
       format.html
       format.json { render json: WhatsppMessagesDatatable.new(view_context,@user) }
     end
   end
-
-  # GET /whatspp_messages/1
-  # GET /whatspp_messages/1.json
-  def show
-  end
-
+  
   # POST /whatspp_messages
   # POST /whatspp_messages.json
   def create
@@ -38,15 +32,4 @@ class WhatsppMessagesController < ApplicationController
       end
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_whatspp_message
-      @whatspp_message = WhatsppMessage.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def whatspp_message_params
-      params.require(:whatspp_message).permit(:data, :user_id, :spam)
-    end
 end

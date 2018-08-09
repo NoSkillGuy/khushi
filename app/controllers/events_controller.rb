@@ -3,7 +3,11 @@ class EventsController < ApplicationController
 
 	def index
 		@user = User.find(params[:user_id])
-		whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+		if @user.admin?
+			whatspp_message_ids = WhatsppMessages.all.pluck(:id)
+		else
+			whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+		end
 		output_arr = []
 		Event.categories.each do |c,v|
 		  category_hash = {}

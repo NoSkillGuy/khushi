@@ -13,7 +13,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 Rails.application.config.assets.precompile += %w( sb-admin.css sb-admin.js dataTables.bootstrap4.js dataTables.bootstrap4.css datatables-demo.coffee)
 
-controllers = %w(users whatspp_messages)
+controllers = %w(users whatspp_messages registrations)
 
 # Controller CSS Assets
 Rails.application.config.assets.precompile += controllers.map{|x| x+".scss"}

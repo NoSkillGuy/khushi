@@ -56,7 +56,10 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   # Mailer default url options
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'https://3a05dbb6.ngrok.io'}
+  config.action_mailer.perform_deliveries = true
+  # config.action_mailer.delivery_method = :smtp
+  # config.action_mailer.smtp_settings = {:address => 'https://3a05dbb6.ngrok.io'}
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

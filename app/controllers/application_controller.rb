@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
  #    redirect_to root_path, flash: { error: 'You have to login!' }
  #  end
  	def user_logged_in
- 		@user = User.first
+ 		@user = current_user
  	end
 end

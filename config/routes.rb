@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-	root to: "user#index"
+  devise_for :users, :controllers => { registrations: 'registrations' }
+	root 'users#show'
   resources :whatspp_messages, only: [:create, :show]
-  resources :users, only: [:show, :new, :create, :update, :edit, :index] do
+  resources :users, only: [:show, :new, :create, :update, :edit] do
   	resources :events, only: [:index]
   	resources :whatspp_messages, only: [:index]
   end

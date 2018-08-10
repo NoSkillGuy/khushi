@@ -1,35 +1,34 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_logged_in
-
+  before_action :load_whatspp_message_ids
   # layout :resolve_layout
   # GET /users/1
   # GET /users/1.json
   def show
+    @event_data_by_category_and_minute = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+    @event_data_by_category = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).count
   end
 
   def events_count
-    if @user.admin?
-      whatspp_message_ids = WhatsppMessage.all.pluck(:id)
-    else
-      whatspp_message_ids = @user.whatspp_messages.pluck(:id)
-    end
-    event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count.count
+    event_data = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count.count
     respond_to do |format|
       format.json { render json: event_data }
     end    
   end
 
-  def events_data
-    if @user.admin?
-      whatspp_message_ids = WhatsppMessage.all.pluck(:id)
-    else
-      whatspp_message_ids = @user.whatspp_messages.pluck(:id)
-    end
-    event_data = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+  def event_data_by_category_and_minute
+    event_data_by_category_and_minute = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count
     respond_to do |format|
-      format.json { render json: JSON.parse(event_data.chart_json) }
+      format.json { render json: JSON.parse(event_data_by_category_and_minute.chart_json) }
     end    
+  end
+
+  def events_by_category_data
+    event_data_by_category = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).count
+    respond_to do |format|
+      format.json { render json: event_data_by_category }
+    end
   end
 
   # GET /users/new
@@ -95,4 +94,11 @@ class UsersController < ApplicationController
     #     'application'
     #   end
     # end
+    def load_whatspp_message_ids
+      if @user.admin?
+        @whatspp_message_ids = WhatsppMessage.all.pluck(:id)
+      else
+        @whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+      end
+    end
 end

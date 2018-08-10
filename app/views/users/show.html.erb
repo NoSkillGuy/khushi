@@ -38,16 +38,50 @@
 
 <%# event_data = Event.group(:category).group_by_minute(:created_at).count %>
 <%#= event_data %>
-<strong>Events Activity Time Line Graph</strong>
+
 <div id="users_show_page">
-  <%
-  if @user.admin?
-    whatspp_message_ids = WhatsppMessage.all.pluck(:id)
-  else
-    whatspp_message_ids = @user.whatspp_messages.pluck(:id)
-  end  
-  event_data_by_category_and_minute = Event.where(whatspp_message_id: whatspp_message_ids).group(:category).group_by_minute(:created_at).count
-  %>
-  <%= line_chart event_data_by_category_and_minute, id: 'event_line_chart' %>
-  <p id="user_events_path" data-user-events-path=<%= events_data_user_path(id: @user.id) %> data-user-events-count=<%= event_data_by_category_and_minute.count %> data-user-events-count-path=<%= events_count_user_path(id: @user.id) %>></p>
+  
+  <form class="form-inline" action="#">
+    <strong>Events Activity Time Line Graph</strong>&nbsp;&nbsp;&nbsp;
+    <div class="form-group">
+      <input type="text" class="form-control" id="start_date" placeholder="Start date">
+    </div>&nbsp;&nbsp;
+    <div class="form-group">
+      <input type="text" class="form-control" id="end_date" placeholder="End date">
+    </div>&nbsp;&nbsp;
+    <div class="form-group">
+      <!-- <input type="text" class="form-control" id="category" placeholder="Category"> -->
+      <%= select_tag :category, options_for_select(Event.categories.to_a), {class: 'form-control'} %>
+    </div>&nbsp;&nbsp;
+    <% if @user.admin? %>
+      <div class="form-group">
+        <!-- <input type="text" class="form-control" id="user" placeholder="User"> -->
+        <%= select_tag :user, options_for_select(User.all.pluck(:first_name)), {class: 'form-group form-control'} %>
+      </div>&nbsp;&nbsp;
+    <% end %>
+    <button type="submit" class="btn btn-default" id="refresh_data">Refresh Data</button>
+  </form> 
+  <%= line_chart @event_data_by_category_and_minute, id: 'event_line_chart' %>
+  <p id="user_events_path" data-user-events-path=<%= event_data_by_category_and_minute_user_path(id: @user.id) %> data-user-events-count=<%= @event_data_by_category_and_minute.count %> data-user-events-count-path=<%= events_count_user_path(id: @user.id) %> data-user-events-category-path=<%= events_by_category_data_user_path(id: @user.id) %> ></p>
+  
+  <strong>Events Activity Table</strong>
+  <table class="table table-sm">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Category</th>
+        <th scope="col">Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @event_data_by_category.each_with_index do |(category,count),index| %>
+        <tr>
+          <th scope="row"><%= index+1 %></th>
+          <td><%= category %></td>
+          <td id="<%= category %>_count"><%= count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
 </div>

@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   resources :users, only: [:show] do
   	member do
 		  post 'events_count'
-		  post 'events_data'
+		  post 'event_data_by_category_and_minute'
+      post 'events_by_category_data'
 		end
   	resources :whatspp_messages, only: [:index]
   end

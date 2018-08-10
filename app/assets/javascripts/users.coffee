@@ -10,12 +10,6 @@ jQuery ->
     categoryDataSource = $('#user_events_path').data('user-events-category-path')
     $.ajaxSetup headers: 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
 
-    $('#date_range').daterangepicker
-      timePicker: true
-      startDate: moment().startOf('hour')
-      endDate: moment()
-      locale: format: 'M/DD hh:mm A'
-
     get_event_chart_data = ->
       $.post("http://localhost:3001/"+eventsDataSource+".json",
       somedata: 'Somedata').done (data) ->
@@ -71,6 +65,13 @@ jQuery ->
       return    
 
 ###
+
+    $('#date_range').daterangepicker
+      timePicker: true
+      startDate: moment().startOf('hour')
+      endDate: moment()
+      locale: format: 'M/DD hh:mm A'
+      
 
     get_event_data = (request, response) ->
       $.ajax

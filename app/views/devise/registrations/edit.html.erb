@@ -163,9 +163,14 @@
                             <% 
                             if @user.admin?
                               events_detected = Event.all.pluck(:category).uniq || []
+                              whatspp_messages_count = WhatsppMessage.count
+                              user_events_total_count = Event.count
                             else
                               events_detected = @user.events.pluck(:category).uniq || []
+                              whatspp_messages_count = @user.whatspp_messages.count
+                              user_events_total_count = @user.events.count
                             end
+                            user_events_category_count = events_detected.count
                             %>
                             <h6>
                               <% if events_detected.present? %>
@@ -178,11 +183,9 @@
                                 <a href="#" class="badge badge-dark badge-pill"><%= event %></a>
                               <% end %>
                             <hr>
-                            <% whatspp_message_ids = WhatsppMessage.where(user_id: @user.id).ids %>
-
-                            <span class="badge badge-primary"><i class="fa fa-cog"></i> <%= @user.events.count %> events</span>
-                            <span class="badge badge-success"><i class="fab fa-whatsapp"></i> <%= whatspp_message_ids.count %> Whatspp Messages</span>
-                            <span class="badge badge-danger"><i class="fa fa-eye"></i> <%= @user.events.count %> total events</span>
+                            <span class="badge badge-primary"><i class="fa fa-cog"></i> <%= user_events_category_count %> events</span>
+                            <span class="badge badge-success"><i class="fab fa-whatsapp"></i> <%= whatspp_messages_count %> Whatspp Messages</span>
+                            <span class="badge badge-danger"><i class="fa fa-eye"></i> <%= user_events_total_count %> total events</span>
                         </div>
                         <div class="col-md-12">
                           <h2>Two Factor Authentication</h2>
@@ -222,13 +225,16 @@
                       <div class="form-group row">
                           <label class="col-lg-3 col-form-label form-control-label">Password</label>
                           <div class="col-lg-9">
-                              <input class="form-control" type="password" value="">
+                              <!-- <input class="form-control" type="password" value=""> -->
+                              <%#= form.text_field :password, class: 'form-control' %>
+                              <%= form.password_field :password, autocomplete: "off", class: 'form-control', placeholder: 'Password' %>
                           </div>
                       </div>
                       <div class="form-group row">
                           <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
                           <div class="col-lg-9">
-                              <input class="form-control" type="password" value="">
+                              <!-- <input class="form-control" type="password" value="z"> -->
+                              <%= form.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: 'Password Confirmation' %>
                           </div>
                       </div>
                       <div class="form-group row">

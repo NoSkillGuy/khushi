@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 	
   resources :whatspp_messages, only: [:create, :show]
-  resources :users, only: [:show] do
+  resources :users, only: [:show, :update] do
   	member do
 		  post 'events_count'
 		  post 'event_data_by_category_and_minute'

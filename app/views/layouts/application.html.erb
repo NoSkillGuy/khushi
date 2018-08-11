@@ -27,8 +27,7 @@
 
       <div class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
       </div>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
@@ -99,6 +98,18 @@
       <div id="content-wrapper">
 
         <div class="container-fluid">
+          <% if notice.present? %>
+            <div class="alert alert-success notice" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong><%= notice %></strong>
+            </div>
+          <% end %>
+          <% if alert.present? %>
+            <div class="alert alert-danger notice" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <strong><%= alert %></strong>
+            </div>
+          <% end %>
           <%= yield %>
         </div>
         <!-- /.container-fluid -->

@@ -1,11 +1,6 @@
 class ApplicationController < ActionController::Base
-	# def user_logged_in
- #    if session[:user_id].present?
- #      @user = User.where(id: session[:user_id]).first
- #      return true if @user
- #    end
- #    redirect_to root_path, flash: { error: 'You have to login!' }
- #  end
+	before_action :configure_permitted_parameters, if: :devise_controller?
+
  	def user_logged_in
  		@user = current_user
  	end
@@ -31,5 +26,10 @@ class ApplicationController < ActionController::Base
       self
     end.to_json
 	end
+
+  protected
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
+    end    
 
 end

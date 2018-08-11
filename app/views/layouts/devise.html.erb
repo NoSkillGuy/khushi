@@ -13,8 +13,25 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body class="bg-dark">
-      <div class="notice"><%= notice %></div>
-      <div class="alert"><%= alert %></div>
+      <% if notice.present? %>
+        <div class="alert alert-success notice" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong><%= notice %></strong>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="alert alert-danger notice" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong><%= alert %></strong>
+        </div>
+      <% end %>
       <%= yield %>
+      <script type="text/javascript">
+        window.setTimeout((function() {
+          $('.alert').fadeTo(500, 0).slideUp(500, function() {
+            $(this).remove();
+          });
+        }), 4000);        
+      </script>
   </body>
 </html>

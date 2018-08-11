@@ -22,6 +22,7 @@ class User < ApplicationRecord
   end
 
   def otp_backup_codes
-    JSON.parse(super)
+    super_return_value = super
+    JSON.parse(super_return_value) if super_return_value.present?
   end	
 end

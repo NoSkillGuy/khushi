@@ -27,7 +27,7 @@
         <div class="form-group">
           <div class="form-label-group">
             <%= f.text_field :otp_attempt, autocomplete: "off", placeholder: '2FA Code', class: 'form-control d-none' %>
-            <%= f.label :otp_attempt %>
+            <%#= f.label :otp_attempt %>
           </div>
         </div>
         <% if devise_mapping.rememberable? -%>

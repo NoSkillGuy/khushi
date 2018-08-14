@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_logged_in
-  before_action :load_whatspp_message_ids
-  # layout :resolve_layout
+  before_action :load_whatspp_message_ids, except: [:verify_phone_number, :submit_phone_otp]
+  # before_action :verified_phone_number?, only: [:show]
+  layout :resolve_layout
   # GET /users/1
   # GET /users/1.json
   def show
@@ -21,7 +22,7 @@ class UsersController < ApplicationController
     event_data_by_category_and_minute = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count
     respond_to do |format|
       format.json { render json: JSON.parse(event_data_by_category_and_minute.chart_json) }
-    end    
+    end
   end
 
   def events_by_category_data
@@ -70,6 +71,25 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify_phone_number
+    if @user.verified_phone_number
+      redirect_to @user
+    else
+      @user.generate_new_mobile_otp
+      @user.send_otp_to_user_mobile
+    end
+  end
+
+  def submit_phone_otp
+    if params['otp'].to_i == @user.sms_otp
+      @user.verified_phone_number = 1
+      @user.save
+      redirect_to @user, notice: 'Phone Verified'
+    else
+      redirect_to verify_phone_number_user_path(id: @user.id)
+    end
+  end
+
   # DELETE /users/1
   # DELETE /users/1.json
   # def destroy
@@ -83,22 +103,33 @@ class UsersController < ApplicationController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:first_name, :second_name, :password, :password_confirmation)
+      params.require(:user).permit(:first_name, :second_name, :password, :password_confirmation, :otp)
     end
 
-    # def resolve_layout
-    #   case action_name
-    #   when 'new'
-    #     'devise'
-    #   else
-    #     'application'
-    #   end
-    # end
-    def load_whatspp_message_ids
-      if @user.admin?
-        @whatspp_message_ids = WhatsppMessage.all.pluck(:id)
+    def resolve_layout
+      case action_name
+      when 'verify_phone_number'
+        'devise'
       else
-        @whatspp_message_ids = @user.whatspp_messages.pluck(:id)
+        'application'
       end
     end
+
+    def load_whatspp_message_ids
+      whatspp_messages = WhatsppMessage.none
+      if @user.admin?
+        whatspp_messages = WhatsppMessage.all
+        whatspp_messages = whatspp_messages.where(user_id: params['user']) if params['user']
+      else
+        whatspp_messages = @user.whatspp_messages
+      end      
+      whatspp_messages = whatspp_messages.where('created_at > ?', Time.parse(params['start_date'])) if params['start_date']
+      whatspp_messages = whatspp_messages.where('created_at < ?', Time.parse(params['end_date'])) if params['end_date']
+      # @whatspp_messages = @whatspp_messages.where(user_id: params['user') if params['user']
+      @whatspp_message_ids = whatspp_messages.pluck(:id)
+    end
+
+    # def verified_phone_number?
+    #   redirect_to verify_phone_number_user_path(id: @user.id) unless @user.verified_phone_number
+    # end
 end

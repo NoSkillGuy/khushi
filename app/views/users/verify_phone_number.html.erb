@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="card card-login mx-auto mt-5">
+    <div class="card-header">An OTP SMS is sent to Your phone number, Please enter the OTP below</div>
+    <div class="card-body">
+      <%#= form_with(model: @user, :url => {:controller => "users", :action => "submit_phone_otp", :method => 'POST'}, local: true) do |f| %>
+      <%= form_tag(submit_phone_otp_user_path(id: @user.id) , method: 'post')%>
+			  <% if @user.errors.any? %>
+			    <div id="error_explanation">
+			      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+			      <ul>
+			      <% @user.errors.full_messages.each do |message| %>
+			        <li><%= message %></li>
+			      <% end %>
+			      </ul>
+			    </div>
+			  <% end %>
+        <div class="form-group">
+          <div class="form-label-group">
+            <%#= f.text_field :sms_otp, autofocus: true, class: 'form-control',placeholder: 'OTP' %>
+            <%= text_field_tag 'otp',nil, { autofocus: true, class: 'form-control', placeholder: 'OTP'} %>
+            <label for="otp">SMS OTP</label>
+          </div>
+        </div>
+        <%#= f.submit "Verify Mobile Number", class: 'btn btn-primary btn-block' %>
+        <% submit_tag "Verify Mobile Number", class: 'btn btn-primary btn-block' %>
+      <%# end %>
+    </div>
+  </div>
+</div>

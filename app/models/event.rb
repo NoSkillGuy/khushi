@@ -31,9 +31,10 @@ class Event < ApplicationRecord
 	def self.set_events_for_a_whatspp_message whatspp_message_id: nil
 		whatspp_message = WhatsppMessage.find(whatspp_message_id)
 		whatspp_message_data = whatspp_message.data.downcase
+		whatspp_message_data_words = whatspp_message_data.split(' ')
 		p whatspp_message_data
 		KEY_WORDS.each do |key_word,key_word_type|
-			if whatspp_message_data.include? key_word.to_s
+			if whatspp_message_data_words.include? key_word.to_s
 				if key_word == 'mauc'
 					whatspp_message_in_digits = []
 					whatspp_message_data.split('').each do |ch|
@@ -47,12 +48,14 @@ class Event < ApplicationRecord
 							end
 						end
 					end
-					if whatspp_message_in_digits.join.split(" ").map{|x| x.to_i < 12.5}.include? true
+					if whatspp_message_in_digits.join.split(" ").map{|x| x.to_i < MAUC_VALUE}.include? true
 						Event.create(whatspp_message_id: whatspp_message.id, category: key_word_type)	
-					end					
+					end
 				else
 					Event.create(whatspp_message_id: whatspp_message.id, category: key_word_type)
 				end
+			elsif whatspp_message_data_words.include? 'high' and whatspp_message_data_words.include? 'risk' and whatspp_message_data.include? 'high risk'
+				Event.create(whatspp_message_id: whatspp_message.id, category: 0)
 			end
 		end
 		Event.create(whatspp_message_id: whatspp_message.id, category: 9) if whatspp_message.events.count.zero?

@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     post 'users/pre_otp', to: 'sessions#pre_otp'
     # root to: 'users#show'
     authenticated :user do
-      root 'users#show', as: :authenticated_root
+      root 'users#verify_phone_number', as: :authenticated_root
     end
 
     unauthenticated do
@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 		  post 'events_count'
 		  post 'event_data_by_category_and_minute'
       post 'events_by_category_data'
+      get 'verify_phone_number'
+      post 'submit_phone_otp'
 		end
   	resources :whatspp_messages, only: [:index]
   end

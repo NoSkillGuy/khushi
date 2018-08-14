@@ -11,7 +11,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w( sb-admin.css sb-admin.js dataTables.bootstrap4.js dataTables.bootstrap4.css datatables-demo.coffee)
+Rails.application.config.assets.precompile += %w( sb-admin.css sb-admin.js dataTables.bootstrap4.js dataTables.bootstrap4.css datatables-demo.coffee bootstrap-datetimepicker.css bootstrap-datetimepicker.js )
 
 controllers = %w(users whatspp_messages registrations)
 

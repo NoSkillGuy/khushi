@@ -14,6 +14,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" integrity="sha384-O1hPCzrpXngZMErIjr+H0eOvTf1GKeN4n8CAAgeGgNT8SmQot8u0Zf7V9ipByhSi" crossorigin="anonymous"> -->
+    <%= stylesheet_link_tag 'bootstrap-datetimepicker' %>
     <%= stylesheet_link_tag params[:controller] unless params[:controller].include? 'devise'%>
   </head>
   <% website_name = 'Khushi' %>
@@ -161,6 +163,8 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" integrity="sha384-rgWRqC0OFPisxlUvl332tiM/qmaNxnlY46eksSZD84t+s2vZlqGeHrncwIRX7CGp" crossorigin="anonymous"></script>
     <%= javascript_include_tag 'dataTables.bootstrap4.js' %>
     <%= javascript_include_tag "sb-admin.js"%>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha384-eRwUWQDbnWMRrNpCKFsqmkfL7PMM8a4uUw5AvjTuLRoYFfozRz7g9BS696LvdNrE" crossorigin="anonymous"></script> -->
+    <%= javascript_include_tag 'bootstrap-datetimepicker' %>
     <%= javascript_include_tag params[:controller] unless params[:controller].include? 'devise'%>
   </body>
 

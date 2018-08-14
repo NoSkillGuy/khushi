@@ -4,15 +4,19 @@
 
 jQuery ->
   $("#user_show_page").ready ->
+    webProtocol = $(location).attr('protocol');
+    webDomain = $(location).attr('host');
+    webUrl = webProtocol + webDomain
     eventsDataSource = $('#user_events_path').data('user-events-path')
     eventsCountDataSource = $('#user_events_path').data('user-events-count-path')
     eventsCount = $('#user_events_path').data('user-events-count')
     categoryDataSource = $('#user_events_path').data('user-events-category-path')
     $.ajaxSetup headers: 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+    post_params = {}
 
     get_event_chart_data = ->
-      $.post("http://localhost:3001/"+eventsDataSource+".json",
-      somedata: 'Somedata').done (data) ->
+      $.post('https://3a05dbb6.ngrok.io'+eventsDataSource+".json",
+      post_params).done (data) ->
         new Chartkick.LineChart('event_line_chart', data)
         return
     
@@ -27,8 +31,8 @@ jQuery ->
       return
 
     get_event_table_data = ->
-      $.post("http://localhost:3001/"+categoryDataSource+".json",
-      somedata: 'Somedata').done (data) ->
+      $.post('https://3a05dbb6.ngrok.io'+categoryDataSource+".json",
+      post_params).done (data) ->
         change_user_category_values(data)
         return
 
@@ -42,27 +46,36 @@ jQuery ->
         
 
     get_the_count_of_event_data = ->
-      $.post("http://localhost:3001/"+eventsCountDataSource+".json",
-        name: 'John'
-        time: '2pm').done (data) ->
+      $.post('https://3a05dbb6.ngrok.io'+eventsCountDataSource+".json",
+        post_params).done (data) ->
         check_and_update_chart(data)
         return
 
     refreshIntervalId = setInterval (->
       get_the_count_of_event_data()
-      ),6100
+      ),61000
 
     $('#refresh_data').click ->
       startDate = $('#start_date').val()
       endDate = $('#end_date').val()
       categoryVal = $('#category').val()
       userVal = $('#user').val()
+      $('#user_events_path').data('start-date',startDate)
+      $('#user_events_path').data('end-date',endDate)
+      $('#user_events_path').data('user-id',userVal)
+      $('#user_events_path').data('category-id',categoryVal)      
+      eventsCount = 0
       post_params = 
         start_date: startDate
         end_date: endDate
         category: categoryVal
         user: userVal
-      return    
+      get_the_count_of_event_data()
+      return
+
+    $('#start_date').datetimepicker format: 'yyyy-mm-dd hh:ii'
+
+    $('#end_date').datetimepicker format: 'yyyy-mm-dd hh:ii'
 
 ###
 

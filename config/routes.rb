@@ -13,13 +13,15 @@ Rails.application.routes.draw do
   end
 	
   resources :whatspp_messages, only: [:create, :show]
-  resources :users, only: [:show, :update] do
+  resources :users, only: [:show, :update, :index] do
   	member do
 		  post 'events_count'
 		  post 'event_data_by_category_and_minute'
       post 'events_by_category_data'
       get 'verify_phone_number'
       post 'submit_phone_otp'
+      get 'change_role_to_admin'
+      get 'change_role_to_worker'
 		end
   	resources :whatspp_messages, only: [:index]
   end

@@ -39,10 +39,10 @@
             <span class="badge badge-danger">9+</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">BLAH</a>
+            <a class="dropdown-item" href="#">BLAH</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="#">BLAH</a>
           </div>
         </li>
         <li class="nav-item dropdown no-arrow mx-1">
@@ -51,10 +51,10 @@
             <span class="badge badge-danger">7</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">BLAH</a>
+            <a class="dropdown-item" href="#">BLAH</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="#">BLAH</a>
           </div>
         </li>
         <li class="nav-item dropdown no-arrow">
@@ -98,6 +98,15 @@
             
             <span><%= @user.first_name %></span></a>
         </li>
+        <% if @user.admin? %>
+          <li class="nav-item">
+            <a class="nav-link" id="users_path" href= <%= users_path %>>
+              <%#= link_to 'Edit profile', edit_user_registration_path %>
+              <i class="fas fa-users"></i>
+              
+              <span>Users</span></a>
+          </li>
+        <% end %>
       </ul>
 
       <div id="content-wrapper">

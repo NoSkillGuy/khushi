@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_logged_in
-  before_action :load_whatspp_message_ids, except: [:verify_phone_number, :submit_phone_otp]
+  before_action :load_whatspp_message_ids, except: [:verify_phone_number, :submit_phone_otp, :index, :change_role_to_worker, :change_role_to_admin]
+  before_action :check_if_admin, only: [:index, :change_role_to_worker, :change_role_to_admin]
   # before_action :verified_phone_number?, only: [:show]
   layout :resolve_layout
+
+  def index
+    @users = User.all
+  end
   # GET /users/1
   # GET /users/1.json
   def show
@@ -75,10 +80,10 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+        # format.json { redire :index, status: :ok, location: @user }
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.html { redirect_to action: 'edit' }
+        # format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -112,6 +117,24 @@ class UsersController < ApplicationController
   #   end
   # end
 
+  def change_role_to_admin
+    user = User.find(params['id'])
+    user.number_of_admin_users_requested = 0
+    user.role = 0
+    user.save
+    redirect_to users_url
+  end
+
+  def change_role_to_worker
+    user = User.find(params['id'])
+    user.number_of_admin_users_requested += 1
+    if user.number_of_admin_users_requested > (0.75 * (User.where(role: 0).count-1))
+      user.role = 1
+    end
+    user.save
+    redirect_to users_url
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
@@ -142,6 +165,10 @@ class UsersController < ApplicationController
       #   @whatspp_message_ids = Event.where(category: params['category']).where(whatspp_message_id: whatspp_messages.ids).pluck(:whatspp_message_id)
       # end
       @whatspp_message_ids = whatspp_messages.pluck(:id)
+    end
+
+    def check_if_admin
+      redirect_to @user unless @user.admin?
     end
 
     # def verified_phone_number?

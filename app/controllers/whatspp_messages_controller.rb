@@ -15,20 +15,27 @@ class WhatsppMessagesController < ApplicationController
   # POST /whatspp_messages
   # POST /whatspp_messages.json
   def create
-    @user = User.where(phone_number: params['From'].split(':').second).first
-    if @user.present?
-      @whatspp_message = WhatsppMessage.new(user_id: @user.id, data: params['Body'])
-      respond_to do |format|
-        if @whatspp_message.save
-          @whatspp_message.set_events
-          format.json { render :show, status: :created, location: @whatspp_message }
-        else
+    require 'despamilator'
+    if Despamilator.new(params['Body']).score < 0.8
+      @user = User.where(phone_number: params['From'].split(':').second).first
+      if @user.present?
+        @whatspp_message = WhatsppMessage.new(user_id: @user.id, data: params['Body'])
+        respond_to do |format|
+          if @whatspp_message.save
+            @whatspp_message.set_events
+            format.json { render :show, status: :created, location: @whatspp_message }
+          else
+            format.json { render json: @whatspp_message.errors, status: :unprocessable_entity }
+          end
+        end
+      else
+        respond_to do |format|
           format.json { render json: @whatspp_message.errors, status: :unprocessable_entity }
         end
       end
     else
       respond_to do |format|
-        format.json { render json: @whatspp_message.errors, status: :unprocessable_entity }
+        format.json { render json: {}, status: :unprocessable_entity }
       end
     end
   end

@@ -53,7 +53,7 @@ class Event < ApplicationRecord
 				else
 					Event.create(whatspp_message_id: whatspp_message.id, category: key_word_type)
 				end
-			elsif key_word=='high risk' and whatspp_message_data_words.include? 'high' and whatspp_message_data_words.include? 'risk' and whatspp_message_data.include? 'high risk'
+			elsif key_word.to_s =='high risk' and whatspp_message_data_words.include? 'high' and whatspp_message_data_words.include? 'risk' and whatspp_message_data.include? 'high risk'
 				Event.create(whatspp_message_id: whatspp_message.id, category: 0)
 			end
 		end

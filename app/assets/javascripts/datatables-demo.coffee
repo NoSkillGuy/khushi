@@ -25,7 +25,10 @@ jQuery ->
   
   $('#dataTable tfoot th').each (->
     title = $(this).text()
-    $(this).html '<input type="text" id="search_' +title.toLowerCase()+ '" placeholder="Search ' + title + '" />'
+    if title == 'Time'
+      $(this).html '<input type="text" id="search_' +title.toLowerCase()+ '" placeholder="yyyy/mm/dd hh:mm - yyyy/mm/dd hh:mm" />'
+    else
+      $(this).html '<input type="text" id="search_' +title.toLowerCase()+ '" placeholder="Search ' + title + '" />'
     return)
 
   table.api().columns().every (->

@@ -31,7 +31,7 @@ private
     display_data = []
     whatspp_messages.each do |wm|
       temp_arr = []
-      temp_arr.push wm.created_at
+      temp_arr.push wm.created_at.strftime('%Y/%m/%d %H:%M')
       temp_arr.push wm.user.first_name if @user.admin?
       temp_arr.push wm.user.phone_number if @user.admin?
       temp_arr.push wm.events.pluck(:category).sort.join(',')
@@ -52,12 +52,35 @@ private
       # wms = wms.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
       # wms = wms.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
       # wms = wms.where("data like :search", search: "%#{params[:sSearch_3]}%") if params[:sSearch_3].present?
-      # wms = wms.where("data like :search", search: "%#{params[:sSearch_4]}%") if params[:sSearch_4].present?        
+      wms = wms.where("data like :search", search: "%#{params[:sSearch_4]}%") if params[:sSearch_4].present?        
     else
       wms = WhatsppMessage.includes(:events).where(user_id: @user.id)
-      # wms = wms.where("data like :search", search: "%#{params[:sSearch_0]}%") if params[:sSearch_0].present?
-      wms = wms.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
-      # wms = wms.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
+      if params[:sSearch_0].present?
+        # wms = wms.where("created_at like :search", search: "%#{params[:sSearch_0]}%") 
+        dates = params[:sSearch_0].split('-')
+        
+        begin
+            from_date = DateTime.parse(dates[0]+' +5:30').utc
+            wms = wms.where('created_at >= ?', from_date)
+        rescue StandardError
+            
+        end
+        begin
+            to_date = DateTime.parse(dates[1]+' +5:30').utc
+            wms = wms.where('created_at < ?', to_date)
+        rescue StandardError
+            
+        end
+      end
+      # wms = wms.where("data like :search", search: "%#{params[:sSearch_1]}%") if params[:sSearch_1].present?
+      if params[:sSearch_1].present?
+        temp = []
+        wms.each do |wm|
+          temp.push wm.id if wm.events.pluck(:category).join(',').include? params[:sSearch_1]
+        end
+        wms = WhatsppMessage.where(id: temp)
+      end
+      wms = wms.where("data like :search", search: "%#{params[:sSearch_2]}%") if params[:sSearch_2].present?
     end
 
     if sort_column == 'user' || sort_column == 'phone_number' || sort_column == 'event_category'

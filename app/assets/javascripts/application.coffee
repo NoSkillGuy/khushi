@@ -25,4 +25,4 @@ window.setTimeout (->
     $(this).remove()
     return
   return
-), 4000
+), 5000

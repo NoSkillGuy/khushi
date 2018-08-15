@@ -12,21 +12,33 @@ class UsersController < ApplicationController
   end
 
   def events_count
-    event_data = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count.count
+    if params['category'].present?
+      event_data = Event.where(category: params['category']).where(whatspp_message_id: @whatspp_message_ids).group_by_minute(:created_at).count.count
+    else
+      event_data = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count.count
+    end
     respond_to do |format|
       format.json { render json: event_data }
     end    
   end
 
   def event_data_by_category_and_minute
-    event_data_by_category_and_minute = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+    if params['category'].present?
+      event_data_by_category_and_minute = Event.where(category: params['category']).where(whatspp_message_id: @whatspp_message_ids).group_by_minute(:created_at).count
+    else
+      event_data_by_category_and_minute = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).group_by_minute(:created_at).count
+    end
     respond_to do |format|
       format.json { render json: JSON.parse(event_data_by_category_and_minute.chart_json) }
     end
   end
 
   def events_by_category_data
-    event_data_by_category = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).count
+    if params['category'].present?
+      event_data_by_category = Event.where(category: params['category']).where(whatspp_message_id: @whatspp_message_ids).group(:category).count
+    else
+      event_data_by_category = Event.where(whatspp_message_id: @whatspp_message_ids).group(:category).count
+    end
     respond_to do |format|
       format.json { render json: event_data_by_category }
     end
@@ -119,13 +131,16 @@ class UsersController < ApplicationController
       whatspp_messages = WhatsppMessage.none
       if @user.admin?
         whatspp_messages = WhatsppMessage.all
-        whatspp_messages = whatspp_messages.where(user_id: params['user']) if params['user']
+        whatspp_messages = whatspp_messages.where(user_id: params['user']) if params['user'].present?
       else
         whatspp_messages = @user.whatspp_messages
       end      
-      whatspp_messages = whatspp_messages.where('created_at > ?', Time.parse(params['start_date'])) if params['start_date']
-      whatspp_messages = whatspp_messages.where('created_at < ?', Time.parse(params['end_date'])) if params['end_date']
+      whatspp_messages = whatspp_messages.where('created_at > ?', Time.parse(params['start_date'])) if params['start_date'].present?
+      whatspp_messages = whatspp_messages.where('created_at < ?', Time.parse(params['end_date'])) if params['end_date'].present?
       # @whatspp_messages = @whatspp_messages.where(user_id: params['user') if params['user']
+      # if params['category'].present?
+      #   @whatspp_message_ids = Event.where(category: params['category']).where(whatspp_message_id: whatspp_messages.ids).pluck(:whatspp_message_id)
+      # end
       @whatspp_message_ids = whatspp_messages.pluck(:id)
     end
 

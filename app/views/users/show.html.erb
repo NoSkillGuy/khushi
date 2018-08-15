@@ -41,7 +41,7 @@
 
 <div id="users_show_page">
   
-  <form class="form-inline" action="#">
+  <div class="form-inline" action="#">
     <strong>Events Activity Time Line Graph</strong>&nbsp;&nbsp;&nbsp;
     <div class="form-group">
       <input type="text" class="form-control" id="start_date" placeholder="Start date">
@@ -52,16 +52,23 @@
     </div>&nbsp;&nbsp;
     <div class="form-group">
       <!-- <input type="text" class="form-control" id="category" placeholder="Category"> -->
-      <%#= select_tag :category, options_for_select(Event.categories.to_a), {class: 'form-control'} %>
+      <%#= select_tag 'Category', options_for_select(Event.categories.to_a), {class: 'form-control'} %>
+       <select class="form-control" id="category" placeholder="category">
+          <!-- <option value=""></option> -->
+          <option value="" selected>Select Category</option>
+        <% Event.categories.each do |cat, val| %>
+          <option value="<%=val%>"><%= cat %></option>
+        <% end %>
+      </select> 
     </div>&nbsp;&nbsp;
     <% if @user.admin? %>
       <div class="form-group">
         <!-- <input type="text" class="form-control" id="user" placeholder="User"> -->
-        <%= select_tag :user, options_for_select(User.all.pluck(:first_name)), {class: 'form-group form-control'} %>
+        <%= select_tag :user, options_for_select(User.all.pluck(:first_name, :id)), {class: 'form-group form-control'} %>
       </div>&nbsp;&nbsp;
     <% end %>
     <button type="submit" class="btn btn-default" id="refresh_data">Refresh Data</button>
-  </form> 
+  </div> 
   <%= line_chart @event_data_by_category_and_minute, id: 'event_line_chart' %>
   <p id="user_events_path" data-user-events-path=<%= event_data_by_category_and_minute_user_path(id: @user.id) %> data-user-events-count=<%= @event_data_by_category_and_minute.count %> data-user-events-count-path=<%= events_count_user_path(id: @user.id) %> data-user-events-category-path=<%= events_by_category_data_user_path(id: @user.id)%> data-start-date="" data-end-date="" data-user-id="" data-category-id="" ></p>
   
@@ -75,7 +82,6 @@
       </tr>
     </thead>
     <tbody>
-      
       <% @event_data_by_category.each_with_index do |(category,count),index| %>
         <tr>
           <th scope="row"><%= index+1 %></th>

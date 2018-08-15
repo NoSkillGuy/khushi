@@ -9,8 +9,10 @@
         <thead>
           <tr>
             <th>Time</th>
-            <th>User</th>
-            <th>Phone Number</th>
+            <% if @user.admin? %>
+              <th>User</th>
+              <th>Phone Number</th>
+            <% end %>
             <th>Event Category</th>
             <th>Message</th>
           </tr>
@@ -20,8 +22,10 @@
         <tfoot>
           <tr>
             <th>Time</th>
-            <th>User</th>
-            <th>Phone Number</th>
+            <% if @user.admin? %>
+              <th>User</th>
+              <th>Phone Number</th>
+            <% end %>
             <th>Event Category</th>
             <th>Message</th>
           </tr>

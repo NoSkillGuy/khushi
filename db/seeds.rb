@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
-u = User.new(first_name: 'Siva Praveen', second_name: 'Rayapudi', email: 'rsivapraveen001@gmail.com', role: 0, phone_number: '+918008270250')
+u = User.new(first_name: 'Khushi', second_name: 'Admin', email: 'admin@khushi.com', role: 0, phone_number: '+918008270250')
 u.password = 'password'
 u.password_confirmation = 'password'
 u.skip_confirmation!

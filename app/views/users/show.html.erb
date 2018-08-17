@@ -64,7 +64,7 @@
     <% if @user.admin? %>
       <div class="form-group">
         <!-- <input type="text" class="form-control" id="user" placeholder="User"> -->
-        <%= select_tag :user, options_for_select(User.all.pluck(:first_name, :id)), {class: 'form-group form-control'} %>
+        <%= select_tag :user, options_for_select(User.all.pluck(:first_name, :id)), {class: 'form-group form-control', include_blank: true} %>
       </div>&nbsp;&nbsp;
     <% end %>
     <button type="submit" class="btn btn-default" id="refresh_data">Refresh Data</button>

@@ -18,7 +18,7 @@ class WhatsppMessagesController < ApplicationController
     require 'despamilator'
     if Despamilator.new(params['Body']).score < 0.8
       @user = User.where(phone_number: params['From'].split(':').second).first
-      if @user.present?
+      if @user.present? && @user.verified_phone_number
         @whatspp_message = WhatsppMessage.new(user_id: @user.id, data: params['Body'])
         respond_to do |format|
           if @whatspp_message.save

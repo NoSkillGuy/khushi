@@ -1,14 +1,17 @@
-<table class="table table-sm">
-    <thead class="thead-light">
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-bordered table-hover">
+    <thead class="thead-dark">
       <tr>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Email</th>
-        <th scope="col">Count</th>
-        <th scope="col" colspan="3"></th>
+        <th scope="col">Role</th>
+        <th scope="col">Phone Number</th>
+        <!-- <th scope="col" colspan="3"></th> -->
+        <th scope="col">Action</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody >
       <% @users.each do |user| %>
         <tr>
           <td><%= user.first_name %></td>
@@ -16,10 +19,10 @@
           <td><%= user.email %></td>
           <td><%= user.role %></td>
           <td><%= user.phone_number %></td>
-          <td><%= link_to 'Show', user %></td>
+          <!-- <td><%#= link_to 'Show', user %></td> -->
           <td>
             <% if user.admin? %>
-              <%= link_to 'Make Worker', change_role_to_worker_user_path(user) %>
+              <%= link_to 'Dismiss as Admin', change_role_to_worker_user_path(user) %>
             <% else %>
               <%= link_to 'Make Admin', change_role_to_admin_user_path(user) %>
             <% end %>
@@ -28,3 +31,4 @@
       <% end %>
     </tbody>
   </table>
+</div>

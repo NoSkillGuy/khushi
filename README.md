@@ -1,5 +1,14 @@
 # Khushi
-A WhatsApp Parser web Application built on Ruby on Rails using WhatsApp API provided by Twilio 
+A WhatsApp Parser web Application built on Ruby on Rails using WhatsApp API provided by Twilio. 
+
+## Working Demo
+
+https://969472a4.ngrok.io
+
+WhatsApp Number where you can send messages: `+44 161 850 7453`.
+During the signup process, you will be asked to give your phone number. However to receive OTP, you need first send `join mulberry-chamois` to the above number. 
+#### What messages you will receive?
+Only OTP for phone number verification. 
 
 ## Kick Start Application
 #### Step 1 (Clone the Application): 

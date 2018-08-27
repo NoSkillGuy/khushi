@@ -1,7 +1,8 @@
 # Khushi
 A WhatsApp Parser web Application built on Ruby on Rails using WhatsApp API provided by Twilio. 
 
-## Working Demo [Currently not live! send a mail to rsivapraveen001@mgmail.com for demo]
+## Working Demo 
+[Currently not live! send a mail to rsivapraveen001@gmail.com for demo]
 
 https://969472a4.ngrok.io
 
